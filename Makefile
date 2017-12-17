@@ -16,5 +16,3 @@ build: dependencies code-gen
 run: code-gen
 	go run *.go -kubeconfig=$${HOME}/.kube/config -logtostderr=true -v=2
 
-deploy-tribe-app:
-	kubectl run -i --tty busybox --image=busybox --generator="run-pod/v1" -n "tribe-namespace"
