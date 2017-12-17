@@ -1,0 +1,7 @@
+apiVersion: myfirstcrds.banana.com/v1alpha1
+kind: myfirstcrd
+metadata:
+  name: banana-cake
+spec:
+  deploymentName: banana-cake
+replicas: 1

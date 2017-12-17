@@ -8,13 +8,13 @@ go_library(
         "types.go",
         "zz_generated.deepcopy.go",
     ],
-    importpath = "k8s.io/mycontroller/pkg/apis/mycontroller/v1alpha1",
+    importpath = "github.com/prateeknayak/pg-kube-crd-controller/pkg/apis/mycontroller/v1alpha1",
     visibility = ["//visibility:public"],
     deps = [
         "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:go_default_library",
         "//vendor/k8s.io/apimachinery/pkg/runtime:go_default_library",
         "//vendor/k8s.io/apimachinery/pkg/runtime/schema:go_default_library",
-        "//vendor/k8s.io/sample-controller/pkg/apis/mycontroller:go_default_library",
+        "//vendor/github.com/prateeknayak/pg-kube-crd-controller/pkg/apis/mycontrollerr:go_default_library",
     ],
 )
 
