@@ -1,0 +1,14 @@
+version: '3.4'
+x-volumes:
+  &base
+  build:
+    context: .
+  volumes:
+    - .:/go/src/github.com/prateeknayak/pg-kube-crd-controller
+  working_dir: /go/src/github.com/prateeknayak/pg-kube-crd-controller
+
+services:
+  dep:
+    << : *base
+    entrypoint:
+      - dep

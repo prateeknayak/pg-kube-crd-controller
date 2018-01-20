@@ -1,23 +1,59 @@
-required = ["k8s.io/code-generator/cmd/client-gen"]
+
+# Gopkg.toml example
+#
+# Refer to https://github.com/golang/dep/blob/master/docs/Gopkg.toml.md
+# for detailed Gopkg.toml documentation.
+#
+# required = ["github.com/user/thing/cmd/thing"]
+# ignored = ["github.com/user/project/pkgX", "bitbucket.org/user/project/pkgA/pkgY"]
+#
+# [[constraint]]
+#   name = "github.com/user/project"
+#   version = "1.0.0"
+#
+# [[constraint]]
+#   name = "github.com/user/project2"
+#   branch = "dev"
+#   source = "github.com/myfork/project2"
+#
+# [[override]]
+#  name = "github.com/x/y"
+#  version = "2.4.0"
+
+required = [
+    "k8s.io/code-generator/cmd/client-gen",
+    "k8s.io/code-generator/cmd/deepcopy-gen",
+    "github.com/bazelbuild/buildtools/buildozer"
+]
+
+[[constraint]]
+  branch = "release-1.8" # correct branch
+  name = "k8s.io/code-generator"
+
+[[constraint]]
+  branch = "master" # latest
+  name = "github.com/bazelbuild/buildtools"
+
+[[override]]
+revision = "75356185a9af8f0464efa792e2e9508d5b4be83c" # workaround https://github.com/kubernetes/code-generator/issues/13
+name = "k8s.io/gengo"
+
+[[constraint]]
+  branch = "master" # I want the latest commit from this branch, not just the latest tag or the version used by client-go.
+  name = "github.com/stretchr/testify"
+
+[[constraint]]
+  name = "k8s.io/apiextensions-apiserver"
+  branch = "release-1.8" # correct branch
 
 [[constraint]]
   name = "k8s.io/apimachinery"
-  branch = "release-1.8"
+  branch = "release-1.8" # correct branch
 
 [[constraint]]
   name = "k8s.io/client-go"
-  branch = "release-5.0"
+  branch = "release-5.0" # correct branch
 
 [[constraint]]
-  name = "k8s.io/code-generator"
-  branch = "release-1.8"
-
-[[constraint]]
-  name = "github.com/golang/groupcache/lru"
-
-# goland/dep does not follow k8s.io/code-generator's Godeps.json and gengo's master
-# version does not work with release-1.8 k8s.io/code-generator. So we have to
-# override it.
-[[override]]
-  name = "k8s.io/gengo"
-  revision = "9e661e9308f078838e266cca1c673922088c0ea4"
+  name = "k8s.io/api"
+  branch = "release-1.8" # correct branch

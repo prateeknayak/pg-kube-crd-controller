@@ -1,18 +1,17 @@
-.PHONY: init dependencies code-gen build run
+.PHONY: dep gen run minikube-up kube-apply
 
-init:
-	# Not working for some reason
-	go get -u k8s.io/code-generator
+dep:
+	docker-compose run --rm dep ensure -v
 
-dependencies:
-	godep restore -v
+gen:
+	./bin/update-codegen.sh
 
-code-gen:
-	./hack/update-codegen.sh
-
-build: dependencies code-gen
-	go build
-
-run: code-gen
+run:
 	go run *.go -kubeconfig=$${HOME}/.kube/config -logtostderr=true -v=2
 
+minikube-up:
+	minikube start
+
+kube-apply:
+	kubectl apply -f ./kube-objects/crd.yml
+	kubectl apply -f ./kube-objects/test.yml

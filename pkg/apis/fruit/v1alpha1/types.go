@@ -24,32 +24,33 @@ import (
 // +genclient:noStatus
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// MyFirstCRD is a specification for a MyFirstCRD resource
-type MyFirstCRD struct {
+// Fruit is a specification for a fruit resource
+type Fruit struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   MyFirstCRDSpec   `json:"spec"`
-	Status MyFirstCRDStatus `json:"status"`
+	Spec   FruitSpec   `json:"spec"`
+	Status FruitStatus `json:"status"`
 }
 
-// MyFirstCRDSpec is the spec for a MyFirstCRD resource
-type MyFirstCRDSpec struct {
-	DeploymentName string `json:"deploymentName"`
-	Replicas       *int32 `json:"replicas"`
+// FruitSpec is the spec for a Fruit resource
+type FruitSpec struct {
+	Type     string `json:"type"`
+	Quatnity *int32 `json:"quantity"`
+	Colour   string `json:"color"`
 }
 
-// MyFirstCRDStatus is the status for a MyFirstCRD resource
-type MyFirstCRDStatus struct {
-	AvailableReplicas int32 `json:"availableReplicas"`
+// FruitStatus is the status for a Fruit resource
+type FruitStatus struct {
+	Status string `json:"status"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// MyFirstCRDList is a list of MyFirstCRD resources
-type MyFirstCRDList struct {
+// FruitList is a list of Fruit resources
+type FruitList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata"`
 
-	Items []MyFirstCRD `json:"items"`
+	Items []Fruit `json:"items"`
 }

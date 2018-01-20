@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// +k8s:deepcopy-gen=package
+package fruit
 
-// Package v1alpha1 is the v1alpha1 version of the API.
-// +groupName=mycontroller.k8s.io
-package v1alpha1
+const (
+	GroupName = "fruit.k8s.io"
+)

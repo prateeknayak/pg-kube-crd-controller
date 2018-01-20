@@ -1,9 +1,32 @@
+/*
+MIT License
+
+Copyright (c) 2018 Prateek Nayak
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
 package fake
 
 import (
 	clientset "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned"
-	mycontrollerv1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned/typed/mycontroller/v1alpha1"
-	fakemycontrollerv1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned/typed/mycontroller/v1alpha1/fake"
+	fruitv1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned/typed/fruit/v1alpha1"
+	fakefruitv1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned/typed/fruit/v1alpha1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -44,12 +67,12 @@ func (c *Clientset) Discovery() discovery.DiscoveryInterface {
 
 var _ clientset.Interface = &Clientset{}
 
-// MycontrollerV1alpha1 retrieves the MycontrollerV1alpha1Client
-func (c *Clientset) MycontrollerV1alpha1() mycontrollerv1alpha1.MycontrollerV1alpha1Interface {
-	return &fakemycontrollerv1alpha1.FakeMycontrollerV1alpha1{Fake: &c.Fake}
+// FruitV1alpha1 retrieves the FruitV1alpha1Client
+func (c *Clientset) FruitV1alpha1() fruitv1alpha1.FruitV1alpha1Interface {
+	return &fakefruitv1alpha1.FakeFruitV1alpha1{Fake: &c.Fake}
 }
 
-// Mycontroller retrieves the MycontrollerV1alpha1Client
-func (c *Clientset) Mycontroller() mycontrollerv1alpha1.MycontrollerV1alpha1Interface {
-	return &fakemycontrollerv1alpha1.FakeMycontrollerV1alpha1{Fake: &c.Fake}
+// Fruit retrieves the FruitV1alpha1Client
+func (c *Clientset) Fruit() fruitv1alpha1.FruitV1alpha1Interface {
+	return &fakefruitv1alpha1.FakeFruitV1alpha1{Fake: &c.Fake}
 }

@@ -17,14 +17,14 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"github.com/prateeknayak/pg-kube-crd-controller/pkg/apis/fruit"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-
-	mycontroller "github.com/prateeknayak/pg-kube-crd-controller/pkg/apis/mycontroller"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // SchemeGroupVersion is group version used to register these objects
-var SchemeGroupVersion = schema.GroupVersion{Group: mycontroller.GroupName, Version: "v1alpha1"}
+var SchemeGroupVersion = schema.GroupVersion{Group: fruit.GroupName, Version: "v1alpha1"}
 
 // Kind takes an unqualified kind and returns back a Group qualified GroupKind
 func Kind(kind string) schema.GroupKind {
@@ -43,9 +43,11 @@ var (
 
 // Adds the list of known types to Scheme.
 func addKnownTypes(scheme *runtime.Scheme) error {
-	scheme.AddKnownTypes(SchemeGroupVersion,
-		&MyFirstCRD{},
-		&MyFirstCRDList{},
+	scheme.AddKnownTypes(
+		SchemeGroupVersion,
+		&Fruit{},
+		&FruitList{},
 	)
+	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
 	return nil
 }
