@@ -18,81 +18,71 @@ package main
 
 import (
 	"flag"
-	"os"
-	"os/signal"
-	"syscall"
 	"time"
 
 	"github.com/golang/glog"
+	fruit_clientset "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned"
+	fruit_informers "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/informers/externalversions"
+	"github.com/prateeknayak/pg-kube-crd-controller/pkg/signals"
 	kubeinformers "k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
-	// Uncomment the following line to load the gcp plugin (only required to authenticate against GKE clusters).
-	// _ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
-
-	clientset "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned"
-	informers "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/informers/externalversions"
 )
 
 var (
-	masterURL  string
-	kubeconfig string
+	kubeConfig string
 )
 
-var myFirstChannel = make(chan struct{})
-var shutdownSignals = []os.Signal{os.Interrupt, syscall.SIGTERM}
-
 func main() {
-	flag.Parse()
 
 	// set up signals so we handle the first shutdown signal gracefully
-	stopCh := stopChannel()
+	stopCh := signals.SetupSignalHandler()
 
-	cfg, err := clientcmd.BuildConfigFromFlags(masterURL, kubeconfig)
-	if err != nil {
-		glog.Fatalf("Error building kubeconfig: %s", err.Error())
+	var config *rest.Config
+	var err error
+
+	// if flag has not been passed and env not set, presume running in cluster
+	if kubeConfig != "" {
+		config, err = clientcmd.BuildConfigFromFlags("", kubeConfig)
+	} else {
+		config, err = rest.InClusterConfig()
 	}
 
-	kubeClient, err := kubernetes.NewForConfig(cfg)
+	if nil != err {
+		glog.Fatalf("Error building kubeConfig: %s", err.Error())
+	}
+
+	kubeClient, err := kubernetes.NewForConfig(config)
 	if err != nil {
 		glog.Fatalf("Error building kubernetes clientset: %s", err.Error())
 	}
 
-	exampleClient, err := clientset.NewForConfig(cfg)
+	fruitClient, err := fruit_clientset.NewForConfig(config)
 	if err != nil {
 		glog.Fatalf("Error building example clientset: %s", err.Error())
 	}
 
 	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(kubeClient, time.Second*30)
-	exampleInformerFactory := informers.NewSharedInformerFactory(exampleClient, time.Second*30)
+	exampleInformerFactory := fruit_informers.NewSharedInformerFactory(fruitClient, time.Second*30)
 
-	controller := NewController(kubeClient, exampleClient, kubeInformerFactory, exampleInformerFactory)
+	//controller := NewController(kubeClient, fruitClient, kubeInformerFactory, exampleInformerFactory)
 
 	go kubeInformerFactory.Start(stopCh)
 	go exampleInformerFactory.Start(stopCh)
 
-	if err = controller.Run(2, stopCh); err != nil {
-		glog.Fatalf("Error running controller: %s", err.Error())
-	}
+	//if err = controller.Run(2, stopCh); err != nil {
+	//	glog.Fatalf("Error running controller: %s", err.Error())
+	//}
 }
 
 func init() {
-	flag.StringVar(&kubeconfig, "kubeconfig", "", "Path to a kubeconfig. Only required if out-of-cluster.")
-	flag.StringVar(&masterURL, "master", "", "The address of the Kubernetes API server. Overrides any value in kubeconfig. Only required if out-of-cluster.")
-}
+	flag.StringVar(
+		&kubeConfig,
+		"kubeconfig",
+		"",
+		"Path to a kubeConfig. Only required if out-of-cluster.",
+	)
 
-func stopChannel() (stopCh <-chan struct{}) {
-	close(myFirstChannel) // panics when called twice
-
-	stop := make(chan struct{})
-	c := make(chan os.Signal, 2)
-	signal.Notify(c, shutdownSignals...)
-	go func() {
-		<-c
-		close(stop)
-		<-c
-		os.Exit(1) // second signal. Exit directly.
-	}()
-
-	return stop
+	flag.Parse()
 }
