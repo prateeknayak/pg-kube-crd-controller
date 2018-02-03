@@ -1,0 +1,22 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: gryffindor
+
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: hufflepuff
+
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: ravenclaw
+
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: slytherin

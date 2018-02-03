@@ -35,13 +35,13 @@ import (
 
 // FakeFruits implements FruitInterface
 type FakeFruits struct {
-	Fake *FakeFruitV1alpha1
+	Fake *FakeMyocompanyV1alpha1
 	ns   string
 }
 
-var fruitsResource = schema.GroupVersionResource{Group: "fruit.mycompany.com", Version: "v1alpha1", Resource: "fruits"}
+var fruitsResource = schema.GroupVersionResource{Group: "myocompany.com", Version: "v1alpha1", Resource: "fruits"}
 
-var fruitsKind = schema.GroupVersionKind{Group: "fruit.mycompany.com", Version: "v1alpha1", Kind: "Fruit"}
+var fruitsKind = schema.GroupVersionKind{Group: "myocompany.com", Version: "v1alpha1", Kind: "Fruit"}
 
 // Get takes name of the fruit, and returns the corresponding fruit object, and an error if there is any.
 func (c *FakeFruits) Get(name string, options v1.GetOptions) (result *v1alpha1.Fruit, err error) {

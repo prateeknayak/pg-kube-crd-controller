@@ -1,14 +1,31 @@
 version: '3.4'
 x-volumes:
-  &base
-  build:
-    context: .
+  &vol
   volumes:
     - .:/go/src/github.com/prateeknayak/pg-kube-crd-controller
+    - "$HOME/.kube:/root/.kube"
+    - "$HOME/.minikube:$HOME/.minikube"
+
+x-build:
+  &build
+  build:
+    context: .
+
+x-wd:
+  &wd
   working_dir: /go/src/github.com/prateeknayak/pg-kube-crd-controller
 
 services:
   dep:
-    << : *base
+    << : *build
+    << : *vol
+    << : *wd
     entrypoint:
       - dep
+
+  kubectl:
+    image: lachlanevenson/k8s-kubectl:v1.7.12
+    << : *vol
+    << : *wd
+    entrypoint:
+      - kubectl

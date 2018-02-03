@@ -30,22 +30,22 @@ import (
 	rest "k8s.io/client-go/rest"
 )
 
-type FruitV1alpha1Interface interface {
+type MyocompanyV1alpha1Interface interface {
 	RESTClient() rest.Interface
 	FruitsGetter
 }
 
-// FruitV1alpha1Client is used to interact with features provided by the fruit.mycompany.com group.
-type FruitV1alpha1Client struct {
+// MyocompanyV1alpha1Client is used to interact with features provided by the myocompany.com group.
+type MyocompanyV1alpha1Client struct {
 	restClient rest.Interface
 }
 
-func (c *FruitV1alpha1Client) Fruits(namespace string) FruitInterface {
+func (c *MyocompanyV1alpha1Client) Fruits(namespace string) FruitInterface {
 	return newFruits(c, namespace)
 }
 
-// NewForConfig creates a new FruitV1alpha1Client for the given config.
-func NewForConfig(c *rest.Config) (*FruitV1alpha1Client, error) {
+// NewForConfig creates a new MyocompanyV1alpha1Client for the given config.
+func NewForConfig(c *rest.Config) (*MyocompanyV1alpha1Client, error) {
 	config := *c
 	if err := setConfigDefaults(&config); err != nil {
 		return nil, err
@@ -54,12 +54,12 @@ func NewForConfig(c *rest.Config) (*FruitV1alpha1Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &FruitV1alpha1Client{client}, nil
+	return &MyocompanyV1alpha1Client{client}, nil
 }
 
-// NewForConfigOrDie creates a new FruitV1alpha1Client for the given config and
+// NewForConfigOrDie creates a new MyocompanyV1alpha1Client for the given config and
 // panics if there is an error in the config.
-func NewForConfigOrDie(c *rest.Config) *FruitV1alpha1Client {
+func NewForConfigOrDie(c *rest.Config) *MyocompanyV1alpha1Client {
 	client, err := NewForConfig(c)
 	if err != nil {
 		panic(err)
@@ -67,9 +67,9 @@ func NewForConfigOrDie(c *rest.Config) *FruitV1alpha1Client {
 	return client
 }
 
-// New creates a new FruitV1alpha1Client for the given RESTClient.
-func New(c rest.Interface) *FruitV1alpha1Client {
-	return &FruitV1alpha1Client{c}
+// New creates a new MyocompanyV1alpha1Client for the given RESTClient.
+func New(c rest.Interface) *MyocompanyV1alpha1Client {
+	return &MyocompanyV1alpha1Client{c}
 }
 
 func setConfigDefaults(config *rest.Config) error {
@@ -87,7 +87,7 @@ func setConfigDefaults(config *rest.Config) error {
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *FruitV1alpha1Client) RESTClient() rest.Interface {
+func (c *MyocompanyV1alpha1Client) RESTClient() rest.Interface {
 	if c == nil {
 		return nil
 	}

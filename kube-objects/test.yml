@@ -1,7 +1,8 @@
-apiVersion: myfirstcrds.banana.com/v1alpha1
-kind: myfirstcrd
+apiVersion: fruits.mycompany.com/v1alpha1
+kind: fruits
 metadata:
-  name: banana-cake
+  name: banana
 spec:
-  deploymentName: banana-cake
-replicas: 1
+  type: banana
+  quantity: 5
+  color: yellow

@@ -21,9 +21,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+package fake
 
-package fruit
-
-const (
-	GroupName = "mycompany.com"
+import (
+	v1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned/typed/myocompany/v1alpha1"
+	rest "k8s.io/client-go/rest"
+	testing "k8s.io/client-go/testing"
 )
+
+type FakeMyocompanyV1alpha1 struct {
+	*testing.Fake
+}
+
+func (c *FakeMyocompanyV1alpha1) Fruits(namespace string) v1alpha1.FruitInterface {
+	return &FakeFruits{c, namespace}
+}
+
+// RESTClient returns a RESTClient that is used to communicate
+// with API server by this client implementation.
+func (c *FakeMyocompanyV1alpha1) RESTClient() rest.Interface {
+	var ret *rest.RESTClient
+	return ret
+}

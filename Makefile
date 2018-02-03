@@ -1,7 +1,9 @@
-.PHONY: dep gen run minikube-up kube-apply
+.PHONY: dep gen run minikube-up apply ns-apply crd-apply test-apply test-delete crd-delete ns-delete
+
+dcr ?= docker-compose run --rm
 
 dep:
-	docker-compose run --rm dep ensure -v
+	@$(dcr) dep ensure -v
 
 gen:
 	./bin/update-codegen.sh
@@ -12,6 +14,24 @@ run:
 minikube-up:
 	minikube start
 
-kube-apply:
-	kubectl apply -f ./kube-objects/crd.yml
-	kubectl apply -f ./kube-objects/test.yml
+ns-apply:
+	@$(dcr) kubectl apply -f ./kube-objects/namespaces.yml
+
+ns-delete:
+	@$(dcr) kubectl delete -f ./kube-objects/namespaces.yml
+
+crd-apply:
+	@$(dcr) kubectl apply -f ./kube-objects/crd.yml
+
+crd-delete:
+	@$(dcr) kubectl delete -f ./kube-objects/crd.yml
+
+test-apply:
+	@$(dcr) kubectl apply -f ./kube-objects/test.yml
+
+test-delete:
+	@$(dcr) kubectl delete -f ./kube-objects/test.yml
+
+apply: ns-apply crd-apply test-apply
+
+delete: test-delete crd-delete ns-delete
