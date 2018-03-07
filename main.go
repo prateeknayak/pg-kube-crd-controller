@@ -21,8 +21,8 @@ import (
 	"time"
 
 	"github.com/golang/glog"
-	fruit_clientset "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned"
-	fruit_informers "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/informers/externalversions"
+	crd_clientset "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned"
+	crd_informers "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/informers/externalversions"
 	"github.com/prateeknayak/pg-kube-crd-controller/pkg/signals"
 	kubeinformers "k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"
@@ -58,13 +58,13 @@ func main() {
 		glog.Fatalf("Error building kubernetes clientset: %s", err.Error())
 	}
 
-	fruitClient, err := fruit_clientset.NewForConfig(config)
+	crdClient, err := crd_clientset.NewForConfig(config)
 	if err != nil {
 		glog.Fatalf("Error building example clientset: %s", err.Error())
 	}
 
 	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(kubeClient, time.Second*30)
-	exampleInformerFactory := fruit_informers.NewSharedInformerFactory(fruitClient, time.Second*30)
+	exampleInformerFactory := crd_informers.NewSharedInformerFactory(crdClient, time.Second*30)
 
 	//controller := NewController(kubeClient, fruitClient, kubeInformerFactory, exampleInformerFactory)
 

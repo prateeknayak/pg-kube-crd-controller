@@ -27,56 +27,55 @@ SOFTWARE.
 package v1alpha1
 
 import (
-	time "time"
-
-	fruit_v1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/apis/sharedconfig/v1alpha1"
+	sharedconfig_v1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/apis/sharedconfig/v1alpha1"
 	versioned "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned"
 	internalinterfaces "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/informers/externalversions/internalinterfaces"
-	v1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/listers/myocompany/v1alpha1"
+	v1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/listers/sharedconfig/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	watch "k8s.io/apimachinery/pkg/watch"
 	cache "k8s.io/client-go/tools/cache"
+	time "time"
 )
 
-// FruitInformer provides access to a shared informer and lister for
-// Fruits.
-type FruitInformer interface {
+// SharedConfigInformer provides access to a shared informer and lister for
+// SharedConfigs.
+type SharedConfigInformer interface {
 	Informer() cache.SharedIndexInformer
-	Lister() v1alpha1.FruitLister
+	Lister() v1alpha1.SharedConfigLister
 }
 
-type fruitInformer struct {
+type sharedConfigInformer struct {
 	factory internalinterfaces.SharedInformerFactory
 }
 
-// NewFruitInformer constructs a new informer for Fruit type.
+// NewSharedConfigInformer constructs a new informer for SharedConfig type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewFruitInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
+func NewSharedConfigInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{
 			ListFunc: func(options v1.ListOptions) (runtime.Object, error) {
-				return client.MyocompanyV1alpha1().Fruits(namespace).List(options)
+				return client.SharedconfigV1alpha1().SharedConfigs(namespace).List(options)
 			},
 			WatchFunc: func(options v1.ListOptions) (watch.Interface, error) {
-				return client.MyocompanyV1alpha1().Fruits(namespace).Watch(options)
+				return client.SharedconfigV1alpha1().SharedConfigs(namespace).Watch(options)
 			},
 		},
-		&fruit_v1alpha1.Fruit{},
+		&sharedconfig_v1alpha1.SharedConfig{},
 		resyncPeriod,
 		indexers,
 	)
 }
 
-func defaultFruitInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
-	return NewFruitInformer(client, v1.NamespaceAll, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc})
+func defaultSharedConfigInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
+	return NewSharedConfigInformer(client, v1.NamespaceAll, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc})
 }
 
-func (f *fruitInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&fruit_v1alpha1.Fruit{}, defaultFruitInformer)
+func (f *sharedConfigInformer) Informer() cache.SharedIndexInformer {
+	return f.factory.InformerFor(&sharedconfig_v1alpha1.SharedConfig{}, defaultSharedConfigInformer)
 }
 
-func (f *fruitInformer) Lister() v1alpha1.FruitLister {
-	return v1alpha1.NewFruitLister(f.Informer().GetIndexer())
+func (f *sharedConfigInformer) Lister() v1alpha1.SharedConfigLister {
+	return v1alpha1.NewSharedConfigLister(f.Informer().GetIndexer())
 }

@@ -24,7 +24,7 @@ SOFTWARE.
 package v1alpha1
 
 import (
-	v1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/apis/fruit/v1alpha1"
+	v1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/apis/sharedconfig/v1alpha1"
 	scheme "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -65,7 +65,7 @@ func newFruits(c *FruitV1alpha1Client, namespace string) *fruits {
 	}
 }
 
-// Get takes name of the fruit, and returns the corresponding fruit object, and an error if there is any.
+// Get takes name of the sharedconfig, and returns the corresponding sharedconfig object, and an error if there is any.
 func (c *fruits) Get(name string, options v1.GetOptions) (result *v1alpha1.Fruit, err error) {
 	result = &v1alpha1.Fruit{}
 	err = c.client.Get().
@@ -100,7 +100,7 @@ func (c *fruits) Watch(opts v1.ListOptions) (watch.Interface, error) {
 		Watch()
 }
 
-// Create takes the representation of a fruit and creates it.  Returns the server's representation of the fruit, and an error, if there is any.
+// Create takes the representation of a sharedconfig and creates it.  Returns the server's representation of the sharedconfig, and an error, if there is any.
 func (c *fruits) Create(fruit *v1alpha1.Fruit) (result *v1alpha1.Fruit, err error) {
 	result = &v1alpha1.Fruit{}
 	err = c.client.Post().
@@ -112,7 +112,7 @@ func (c *fruits) Create(fruit *v1alpha1.Fruit) (result *v1alpha1.Fruit, err erro
 	return
 }
 
-// Update takes the representation of a fruit and updates it. Returns the server's representation of the fruit, and an error, if there is any.
+// Update takes the representation of a sharedconfig and updates it. Returns the server's representation of the sharedconfig, and an error, if there is any.
 func (c *fruits) Update(fruit *v1alpha1.Fruit) (result *v1alpha1.Fruit, err error) {
 	result = &v1alpha1.Fruit{}
 	err = c.client.Put().
@@ -125,7 +125,7 @@ func (c *fruits) Update(fruit *v1alpha1.Fruit) (result *v1alpha1.Fruit, err erro
 	return
 }
 
-// Delete takes name of the fruit and deletes it. Returns an error if one occurs.
+// Delete takes name of the sharedconfig and deletes it. Returns an error if one occurs.
 func (c *fruits) Delete(name string, options *v1.DeleteOptions) error {
 	return c.client.Delete().
 		Namespace(c.ns).
@@ -147,7 +147,7 @@ func (c *fruits) DeleteCollection(options *v1.DeleteOptions, listOptions v1.List
 		Error()
 }
 
-// Patch applies the patch and returns the patched fruit.
+// Patch applies the patch and returns the patched sharedconfig.
 func (c *fruits) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha1.Fruit, err error) {
 	result = &v1alpha1.Fruit{}
 	err = c.client.Patch(pt).

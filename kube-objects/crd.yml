@@ -6,7 +6,7 @@ spec:
   group: mycompany.com
   version: v1alpha1
   names:
-    kind: fruit
+    kind: sharedconfig
     plural: fruits
     shortnames:
     - fr

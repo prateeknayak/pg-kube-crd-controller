@@ -24,7 +24,7 @@ SOFTWARE.
 package v1alpha1
 
 import (
-	v1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/apis/fruit/v1alpha1"
+	v1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/apis/sharedconfig/v1alpha1"
 	"github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned/scheme"
 	serializer "k8s.io/apimachinery/pkg/runtime/serializer"
 	rest "k8s.io/client-go/rest"
@@ -35,7 +35,7 @@ type FruitV1alpha1Interface interface {
 	FruitsGetter
 }
 
-// FruitV1alpha1Client is used to interact with features provided by the fruit.mycompany.com group.
+// FruitV1alpha1Client is used to interact with features provided by the sharedconfig.mycompany.com group.
 type FruitV1alpha1Client struct {
 	restClient rest.Interface
 }

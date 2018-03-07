@@ -25,8 +25,8 @@ package fake
 
 import (
 	clientset "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned"
-	fruitv1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned/typed/fruit/v1alpha1"
-	fakefruitv1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned/typed/fruit/v1alpha1/fake"
+	sharedconfigv1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned/typed/sharedconfig/v1alpha1"
+	fakesharedconfigv1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned/typed/sharedconfig/v1alpha1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -67,12 +67,12 @@ func (c *Clientset) Discovery() discovery.DiscoveryInterface {
 
 var _ clientset.Interface = &Clientset{}
 
-// FruitV1alpha1 retrieves the FruitV1alpha1Client
-func (c *Clientset) FruitV1alpha1() fruitv1alpha1.FruitV1alpha1Interface {
-	return &fakefruitv1alpha1.FakeFruitV1alpha1{Fake: &c.Fake}
+// SharedconfigV1alpha1 retrieves the SharedconfigV1alpha1Client
+func (c *Clientset) SharedconfigV1alpha1() sharedconfigv1alpha1.SharedconfigV1alpha1Interface {
+	return &fakesharedconfigv1alpha1.FakeSharedconfigV1alpha1{Fake: &c.Fake}
 }
 
-// Fruit retrieves the FruitV1alpha1Client
-func (c *Clientset) Fruit() fruitv1alpha1.FruitV1alpha1Interface {
-	return &fakefruitv1alpha1.FakeFruitV1alpha1{Fake: &c.Fake}
+// Sharedconfig retrieves the SharedconfigV1alpha1Client
+func (c *Clientset) Sharedconfig() sharedconfigv1alpha1.SharedconfigV1alpha1Interface {
+	return &fakesharedconfigv1alpha1.FakeSharedconfigV1alpha1{Fake: &c.Fake}
 }

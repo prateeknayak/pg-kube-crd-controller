@@ -24,7 +24,7 @@ SOFTWARE.
 package fake
 
 import (
-	v1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/apis/fruit/v1alpha1"
+	v1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/apis/sharedconfig/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	labels "k8s.io/apimachinery/pkg/labels"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -43,7 +43,7 @@ var fruitsResource = schema.GroupVersionResource{Group: "myocompany.com", Versio
 
 var fruitsKind = schema.GroupVersionKind{Group: "myocompany.com", Version: "v1alpha1", Kind: "Fruit"}
 
-// Get takes name of the fruit, and returns the corresponding fruit object, and an error if there is any.
+// Get takes name of the sharedconfig, and returns the corresponding sharedconfig object, and an error if there is any.
 func (c *FakeFruits) Get(name string, options v1.GetOptions) (result *v1alpha1.Fruit, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewGetAction(fruitsResource, c.ns, name), &v1alpha1.Fruit{})
@@ -83,7 +83,7 @@ func (c *FakeFruits) Watch(opts v1.ListOptions) (watch.Interface, error) {
 
 }
 
-// Create takes the representation of a fruit and creates it.  Returns the server's representation of the fruit, and an error, if there is any.
+// Create takes the representation of a sharedconfig and creates it.  Returns the server's representation of the sharedconfig, and an error, if there is any.
 func (c *FakeFruits) Create(fruit *v1alpha1.Fruit) (result *v1alpha1.Fruit, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewCreateAction(fruitsResource, c.ns, fruit), &v1alpha1.Fruit{})
@@ -94,7 +94,7 @@ func (c *FakeFruits) Create(fruit *v1alpha1.Fruit) (result *v1alpha1.Fruit, err 
 	return obj.(*v1alpha1.Fruit), err
 }
 
-// Update takes the representation of a fruit and updates it. Returns the server's representation of the fruit, and an error, if there is any.
+// Update takes the representation of a sharedconfig and updates it. Returns the server's representation of the sharedconfig, and an error, if there is any.
 func (c *FakeFruits) Update(fruit *v1alpha1.Fruit) (result *v1alpha1.Fruit, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewUpdateAction(fruitsResource, c.ns, fruit), &v1alpha1.Fruit{})
@@ -105,7 +105,7 @@ func (c *FakeFruits) Update(fruit *v1alpha1.Fruit) (result *v1alpha1.Fruit, err 
 	return obj.(*v1alpha1.Fruit), err
 }
 
-// Delete takes name of the fruit and deletes it. Returns an error if one occurs.
+// Delete takes name of the sharedconfig and deletes it. Returns an error if one occurs.
 func (c *FakeFruits) Delete(name string, options *v1.DeleteOptions) error {
 	_, err := c.Fake.
 		Invokes(testing.NewDeleteAction(fruitsResource, c.ns, name), &v1alpha1.Fruit{})
@@ -121,7 +121,7 @@ func (c *FakeFruits) DeleteCollection(options *v1.DeleteOptions, listOptions v1.
 	return err
 }
 
-// Patch applies the patch and returns the patched fruit.
+// Patch applies the patch and returns the patched sharedconfig.
 func (c *FakeFruits) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha1.Fruit, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewPatchSubresourceAction(fruitsResource, c.ns, name, data, subresources...), &v1alpha1.Fruit{})

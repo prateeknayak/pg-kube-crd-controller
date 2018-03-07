@@ -28,8 +28,8 @@ package externalversions
 
 import (
 	versioned "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/clientset/versioned"
-	fruit "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/informers/externalversions/fruit"
 	internalinterfaces "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/informers/externalversions/internalinterfaces"
+	sharedconfig "github.com/prateeknayak/pg-kube-crd-controller/pkg/client/informers/externalversions/sharedconfig"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
@@ -118,9 +118,9 @@ type SharedInformerFactory interface {
 	ForResource(resource schema.GroupVersionResource) (GenericInformer, error)
 	WaitForCacheSync(stopCh <-chan struct{}) map[reflect.Type]bool
 
-	Fruit() fruit.Interface
+	Sharedconfig() sharedconfig.Interface
 }
 
-func (f *sharedInformerFactory) Fruit() fruit.Interface {
-	return fruit.New(f)
+func (f *sharedInformerFactory) Sharedconfig() sharedconfig.Interface {
+	return sharedconfig.New(f)
 }

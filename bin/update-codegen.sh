@@ -16,6 +16,6 @@ pushd "${GOPATH}/src/${REPO}/vendor/k8s.io/code-generator"
 
 ./generate-groups.sh all \
     ${REPO}/pkg/client \
-    ${REPO}/pkg/apis "fruit:v1alpha1"
+    ${REPO}/pkg/apis "sharedconfig:v1alpha1"
 
 popd

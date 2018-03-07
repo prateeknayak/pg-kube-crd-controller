@@ -28,7 +28,7 @@ package externalversions
 
 import (
 	"fmt"
-	v1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/apis/fruit/v1alpha1"
+	v1alpha1 "github.com/prateeknayak/pg-kube-crd-controller/pkg/apis/sharedconfig/v1alpha1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 )
@@ -59,9 +59,9 @@ func (f *genericInformer) Lister() cache.GenericLister {
 // TODO extend this to unknown resources with a client pool
 func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource) (GenericInformer, error) {
 	switch resource {
-	// Group=Fruit, Version=V1alpha1
-	case v1alpha1.SchemeGroupVersion.WithResource("fruits"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Fruit().V1alpha1().Fruits().Informer()}, nil
+	// Group=Sharedconfig, Version=V1alpha1
+	case v1alpha1.SchemeGroupVersion.WithResource("sharedconfigs"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Sharedconfig().V1alpha1().SharedConfigs().Informer()}, nil
 
 	}
 
